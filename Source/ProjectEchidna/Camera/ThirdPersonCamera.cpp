@@ -19,17 +19,33 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 
 void UThirdPersonCamera::CameraTick(float deltaTime)
 {
-	//SetWorldLocation(characterRef->GetActorLocation() - GetForwardVector() * 500)
+	UpdateCameraPosition(deltaTime);
+	UpdateCameraRotation(deltaTime);
+	UpdateCameraOffset(deltaTime);
+	UpdateFOV(deltaTime);
+}
 
-	FVector2d interpSphericalCoords = CameraUtils::PolarLerp(GetRelativeLocation().UnitCartesianToSpherical(), targetSphericalCoords, FMath::Clamp(deltaTime * 4, 0.f, 1.f));
-	UE_LOG(LogTemp, Warning, TEXT("Interp is: %s (from %s to %s "), *interpSphericalCoords.ToString(), *GetRelativeLocation().UnitCartesianToSpherical().ToString(), *targetSphericalCoords.ToString());
+void UThirdPersonCamera::UpdateCameraPosition(float deltaTime)
+{
+	const FVector2d interpSphericalCoords = CameraUtils::PolarLerp(GetRelativeLocation().UnitCartesianToSpherical(), targetSphericalCoords, FMath::Clamp(deltaTime * 4, 0.f, 1.f));
+	//UE_LOG(LogTemp, Warning, TEXT("Interp is: %s (from %s to %s "), *interpSphericalCoords.ToString(), *GetRelativeLocation().UnitCartesianToSpherical().ToString(), *targetSphericalCoords.ToString());
+	SetRelativeLocation(interpSphericalCoords.SphericalToUnitCartesian() * currentOffset);
+}
 
-	FVector newPos = interpSphericalCoords.SphericalToUnitCartesian() * neutralCameraOffset;
-	
-	//UE_LOG(LogTemp, Warning, TEXT("Polar coords in unit cart: %s"), *position.ToString());
-	
+void UThirdPersonCamera::UpdateCameraRotation(float deltaTime)
+{
 	FRotator newRot = UKismetMathLibrary::FindLookAtRotation(GetComponentLocation(), characterRef->GetActorLocation());
-	
 	SetWorldRotation(newRot);
-	SetRelativeLocation(newPos);
+}
+
+void UThirdPersonCamera::UpdateFOV(float deltaTime)
+{
+	currentFov = FMath::Lerp(wormsEyeCameraFOV, birdsEyeCameraFOV, 1 - targetSphericalCoords.X / 2.13); //TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
+	SetFieldOfView(currentFov);
+	UE_LOG(LogTemp, Warning, TEXT("FOV: %f"), FieldOfView);
+}
+
+void UThirdPersonCamera::UpdateCameraOffset(float deltaTime)
+{
+	currentOffset = FMath::Lerp(wormsEyeCameraOffset, birdsEyeCameraOffset, 1 - targetSphericalCoords.X / 2.13);//TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
 }

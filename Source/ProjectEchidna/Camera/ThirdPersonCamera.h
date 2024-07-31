@@ -21,14 +21,34 @@ public:
 
 	void CameraTick(float deltaTime);
 
+private:
+	void UpdateCameraPosition(float deltaTime);
+	void UpdateCameraRotation(float deltaTime);
+	void UpdateFOV(float deltaTime);
+	void UpdateCameraOffset(float deltaTime);
 	
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings")
-	float neutralCameraOffset = 100.f;
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Offsets")
+	float birdsEyeCameraOffset = 800.f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Offsets")
+	float wormsEyeCameraOffset = 10.f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | FOV")
+	float birdsEyeCameraFOV = 70.f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | FOV")
+	float wormsEyeCameraFOV = 12k,0.f;
 
 private:
 	TObjectPtr<AMainCharacter> characterRef = nullptr;
 
 	FVector2d targetSphericalCoords;
+
+	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
+	float currentOffset = 100.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
+	float currentFov = 90.f;
 
 };
