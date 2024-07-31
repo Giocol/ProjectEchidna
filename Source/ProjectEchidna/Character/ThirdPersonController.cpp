@@ -57,14 +57,14 @@ void AThirdPersonController::SetupInputActions()
 void AThirdPersonController::HandleMovement(const FInputActionValue& value)
 {
 	FVector2D axis = value.Get<FVector2D>();
-	UE_LOG(LogTemp, Warning, TEXT("Movement input: %f, %f"), axis.X, axis.Y);
+	//UE_LOG(LogTemp, Warning, TEXT("Movement input: %f, %f"), axis.X, axis.Y);
 	characterRef->ProcessCharacterMovementInput(axis);
 }
 
 void AThirdPersonController::HandleCameraMovement(const FInputActionValue& value)
 {
 	FVector2D axis = value.Get<FVector2D>();
-	UE_LOG(LogTemp, Warning, TEXT("Camera input: %f, %f"), axis.X, axis.Y);
+	//UE_LOG(LogTemp, Warning, TEXT("Camera input: %f, %f"), axis.X, axis.Y);
 	characterRef->ProcessCameraMovementInput(axis);
 }
 
