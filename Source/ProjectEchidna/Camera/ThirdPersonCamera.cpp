@@ -13,9 +13,13 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 	//TODO: input: normalize? nah? ye? maybe clamp to max/min?
 	//TODO: swizzle input in controller?
 	targetSphericalCoords.X += input.Y * 0.07; //TODO: hardcoded value out, sens in.
-	targetSphericalCoords.Y += input.X * 0.07; 
-	targetSphericalCoords.X = FMath::Clamp(targetSphericalCoords.X, 0.5, 1.90); //avoid weird behavior at sphere's poles
-	UE_LOG(LogTemp, Warning, TEXT("%f"), targetSphericalCoords.X);
+	targetSphericalCoords.Y += input.X * 0.07;
+
+	//avoid weird behavior at sphere's poles
+	targetSphericalCoords.X = FMath::Clamp(targetSphericalCoords.X, pitchLowerLimitRads, pitchUpperLimitRads); 
+
+	targetFov = FMath::Lerp(wormsEyeCameraFOV, birdsEyeCameraFOV, 1 - targetSphericalCoords.X / pitchUpperLimitRads); //TODO: THIS VALUE SHOULD BE 3.13! Change the range of X	targetFov = FMath::Lerp(wormsEyeCameraFOV, birdsEyeCameraFOV, 1 - targetSphericalCoords.X / 2.13); //TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
+	targetOffset = FMath::Lerp(wormsEyeCameraOffset, birdsEyeCameraOffset, 1 - targetSphericalCoords.X / pitchUpperLimitRads);//TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
 }
 
 void UThirdPersonCamera::CameraTick(float deltaTime)
@@ -41,12 +45,12 @@ void UThirdPersonCamera::UpdateCameraRotation(float deltaTime)
 
 void UThirdPersonCamera::UpdateFOV(float deltaTime)
 {
-	currentFov = FMath::Lerp(wormsEyeCameraFOV, birdsEyeCameraFOV, 1 - targetSphericalCoords.X / 2.13); //TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
+	currentFov = FMath::FInterpTo(currentFov, targetFov, deltaTime, 2);
 	SetFieldOfView(currentFov);
 	UE_LOG(LogTemp, Warning, TEXT("FOV: %f"), FieldOfView);
 }
 
 void UThirdPersonCamera::UpdateCameraOffset(float deltaTime)
 {
-	currentOffset = FMath::Lerp(wormsEyeCameraOffset, birdsEyeCameraOffset, 1 - targetSphericalCoords.X / 2.13);//TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
+	currentOffset = FMath::FInterpTo(currentOffset, targetOffset, deltaTime, 2);
 }

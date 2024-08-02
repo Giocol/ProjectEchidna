@@ -40,10 +40,18 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | FOV")
 	float wormsEyeCameraFOV = 120.f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Pitch")
+	float pitchLowerLimitRads = 0.5f; //TODO: make this and the one below clamped between 0 and pi
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Pitch")
+	float pitchUpperLimitRads = 1.90f;
+
 private:
 	TObjectPtr<AMainCharacter> characterRef = nullptr;
 
 	FVector2d targetSphericalCoords = FVector2d(1.f, 0.f);
+	float targetOffset = 100.f;
+	float targetFov = 90.f;
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
 	float currentOffset = 100.f;
