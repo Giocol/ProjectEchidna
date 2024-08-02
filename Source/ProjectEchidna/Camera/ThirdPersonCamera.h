@@ -38,12 +38,12 @@ private:
 	float birdsEyeCameraFOV = 70.f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | FOV")
-	float wormsEyeCameraFOV = 12k,0.f;
+	float wormsEyeCameraFOV = 120.f;
 
 private:
 	TObjectPtr<AMainCharacter> characterRef = nullptr;
 
-	FVector2d targetSphericalCoords;
+	FVector2d targetSphericalCoords = FVector2d(1.f, 0.f);
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
 	float currentOffset = 100.f;

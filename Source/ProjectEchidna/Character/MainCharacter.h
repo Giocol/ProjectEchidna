@@ -7,6 +7,7 @@
 class UThirdPersonCamera;
 class AThirdPersonCamera;
 class UCameraComponent;
+class USkeletalMeshComponent;
 
 UCLASS()
 class PROJECTECHIDNA_API AMainCharacter : public ACharacter
@@ -22,9 +23,14 @@ public:
 
 
 protected:
+	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
-	
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UThirdPersonCamera> cameraRef = nullptr;
+
+private:
+	FVector targetDirection;
+	TObjectPtr<USkeletalMeshComponent> meshComponent;
 };

@@ -6,7 +6,6 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "MainCharacter.h"
-#include "ProjectEchidna/Camera/ThirdPersonCamera.h"
 
 void AThirdPersonController::BeginPlay()
 {
