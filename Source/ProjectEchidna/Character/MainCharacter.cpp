@@ -19,12 +19,12 @@ AMainCharacter::AMainCharacter()
 
 void AMainCharacter::ProcessCharacterMovementInput(FVector2D input)
 {
-	targetDirection = meshComponent->GetForwardVector() * input.X;
-	targetDirection += meshComponent->GetRightVector() * input.Y;
-	//AddMovementInput(targetDirection);
-	
-	AddMovementInput(meshComponent->GetForwardVector(), input.X);
-	AddMovementInput(meshComponent->GetRightVector(), input.Y);
+	//handle input in camera-relative space
+	targetDirection = cameraRef->GetForwardVector() * input.X;
+	targetDirection += cameraRef->GetRightVector() * input.Y;
+	targetDirection.Z = 0;
+	targetDirection.Normalize();
+	AddMovementInput(targetDirection);
 	
 	//targetDirection = FVector(input.X, input.Y, 0); //inefficient?
 }
@@ -47,5 +47,7 @@ void AMainCharacter::Tick(float deltaTime)
 	Super::Tick(deltaTime);
 
 	cameraRef->CameraTick(deltaTime);
+
+	//rotate character towards movement direction
 	meshComponent->SetWorldRotation(FMath::RInterpTo(meshComponent->GetComponentRotation(), targetDirection.Rotation(), deltaTime, 10));
 }

@@ -12,9 +12,10 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 {                                                                                                               
 	//TODO: input: normalize? nah? ye? maybe clamp to max/min?
 	//TODO: swizzle input in controller?
-	targetSphericalCoords.X += input.Y * 0.1; //TODO: hardcoded value out, sens in.
-	targetSphericalCoords.Y += input.X * 0.1; 
-	targetSphericalCoords.X = FMath::Clamp(targetSphericalCoords.X, 0.1, 3.13); //avoid weird behavior at sphere's poles
+	targetSphericalCoords.X += input.Y * 0.07; //TODO: hardcoded value out, sens in.
+	targetSphericalCoords.Y += input.X * 0.07; 
+	targetSphericalCoords.X = FMath::Clamp(targetSphericalCoords.X, 0.5, 1.90); //avoid weird behavior at sphere's poles
+	UE_LOG(LogTemp, Warning, TEXT("%f"), targetSphericalCoords.X);
 }
 
 void UThirdPersonCamera::CameraTick(float deltaTime)
