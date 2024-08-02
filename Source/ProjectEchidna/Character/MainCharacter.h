@@ -27,6 +27,9 @@ protected:
 	virtual void Tick(float deltaTime) override;
 
 private:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+	float rotationSpeed = 10;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UThirdPersonCamera> cameraRef = nullptr;
 

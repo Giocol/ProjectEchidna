@@ -12,8 +12,8 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 {                                                                                                               
 	//TODO: input: normalize? nah? ye? maybe clamp to max/min?
 	//TODO: swizzle input in controller?
-	targetSphericalCoords.X += input.Y * 0.07; //TODO: hardcoded value out, sens in.
-	targetSphericalCoords.Y += input.X * 0.07;
+	targetSphericalCoords.X += input.Y * 0.05; //TODO: hardcoded value out, sens in.
+	targetSphericalCoords.Y += input.X * 0.05;
 
 	//avoid weird behavior at sphere's poles
 	targetSphericalCoords.X = FMath::Clamp(targetSphericalCoords.X, pitchLowerLimitRads, pitchUpperLimitRads); 

@@ -49,5 +49,10 @@ void AMainCharacter::Tick(float deltaTime)
 	cameraRef->CameraTick(deltaTime);
 
 	//rotate character towards movement direction
-	meshComponent->SetWorldRotation(FMath::RInterpTo(meshComponent->GetComponentRotation(), targetDirection.Rotation(), deltaTime, 10));
+	meshComponent->SetWorldRotation(
+		FMath::RInterpTo(
+			meshComponent->GetComponentRotation(),
+			targetDirection.Rotation(),
+			deltaTime,
+			rotationSpeed));
 }
