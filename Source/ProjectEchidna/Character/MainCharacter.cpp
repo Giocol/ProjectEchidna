@@ -4,6 +4,7 @@
 #include "Components/CapsuleComponent.h"
 #include "ProjectEchidna/Camera/ThirdPersonCamera.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "ProjectEchidna/Utils/CameraUtils.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -33,6 +34,11 @@ void AMainCharacter::ProcessCameraMovementInput(FVector2D input) const
 {
 	if(cameraRef)
 		cameraRef->ProcessCameraMovementInput(input);
+}
+
+float AMainCharacter::GetMeshComponentRelativeForwardVector() const
+{
+	return CameraUtils::GetAngleBetweenVectorsRads(GetActorForwardVector(), meshComponent->GetForwardVector());
 }
 
 void AMainCharacter::BeginPlay()

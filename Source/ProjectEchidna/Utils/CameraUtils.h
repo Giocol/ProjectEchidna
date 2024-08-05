@@ -24,4 +24,9 @@ namespace CameraUtils
 	
 		return FVector2D(lerpedX, lerpedY);
 	}
+
+	static float GetAngleBetweenVectorsRads(FVector current, FVector target)
+	{
+		return acos(FVector::DotProduct(current, target));
+	}
 }

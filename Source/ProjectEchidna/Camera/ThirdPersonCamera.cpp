@@ -22,6 +22,7 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 	targetOffset = FMath::Lerp(wormsEyeCameraOffset, birdsEyeCameraOffset, 1 - targetSphericalCoords.X / pitchUpperLimitRads);//TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
 
 	timeSinceLastInput = 0.f;
+	canAutoAlign = true;
 }
 
 void UThirdPersonCamera::CameraTick(float deltaTime)
@@ -30,10 +31,8 @@ void UThirdPersonCamera::CameraTick(float deltaTime)
 	UpdateCameraRotation(deltaTime);
 	UpdateCameraOffset(deltaTime);
 	UpdateFOV(deltaTime);
-	timeSinceLastInput+=deltaTime;
-
-	if(timeSinceLastInput >= autoAlignmentCooldown)
-		targetSphericalCoords = FVector2d(1.f, PI);
+	if(doesAutoAlign)
+		UpdateAutoAlignment(deltaTime);
 }
 
 void UThirdPersonCamera::UpdateCameraPosition(float deltaTime)
@@ -59,4 +58,15 @@ void UThirdPersonCamera::UpdateFOV(float deltaTime)
 void UThirdPersonCamera::UpdateCameraOffset(float deltaTime)
 {
 	currentOffset = FMath::FInterpTo(currentOffset, targetOffset, deltaTime, 2);
+}
+
+void UThirdPersonCamera::UpdateAutoAlignment(float deltaTime)
+{
+	timeSinceLastInput+=deltaTime;
+
+	if(timeSinceLastInput >= autoAlignmentCooldown && canAutoAlign)
+	{
+		targetSphericalCoords = FVector2d(1, -characterRef->GetMeshComponentRelativeAngle());
+		canAutoAlign = false;
+	}
 }

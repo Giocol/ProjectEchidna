@@ -21,7 +21,7 @@ public:
 	void ProcessCharacterMovementInput(FVector2D input);
 	void ProcessCameraMovementInput(FVector2D input) const;
 
-
+	float GetMeshComponentRelativeForwardVector() const;
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;

@@ -26,6 +26,7 @@ private:
 	void UpdateCameraRotation(float deltaTime);
 	void UpdateFOV(float deltaTime);
 	void UpdateCameraOffset(float deltaTime);
+	void UpdateAutoAlignment(float deltaTime);
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Offsets")
@@ -46,8 +47,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Pitch")
 	float pitchUpperLimitRads = 1.90f;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Auto")
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Alignment")
 	float autoAlignmentCooldown = 8.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Alignment")
+	bool doesAutoAlign = true;
 
 private:
 	TObjectPtr<AMainCharacter> characterRef = nullptr;
@@ -57,7 +61,8 @@ private:
 	float targetFov = 90.f;
 
 	float timeSinceLastInput = 0.f;
-
+	bool canAutoAlign = true;
+	
 	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
 	float currentOffset = 100.f;
 
