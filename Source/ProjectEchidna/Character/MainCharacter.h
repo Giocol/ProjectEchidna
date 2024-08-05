@@ -19,7 +19,7 @@ public:
 	AMainCharacter();
 
 	void ProcessCharacterMovementInput(FVector2D input);
-	void ProcessCameraMovementInput(FVector2D input);
+	void ProcessCameraMovementInput(FVector2D input) const;
 
 
 protected:

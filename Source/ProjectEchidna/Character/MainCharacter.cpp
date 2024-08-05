@@ -29,7 +29,7 @@ void AMainCharacter::ProcessCharacterMovementInput(FVector2D input)
 	//targetDirection = FVector(input.X, input.Y, 0); //inefficient?
 }
 
-void AMainCharacter::ProcessCameraMovementInput(FVector2D input)
+void AMainCharacter::ProcessCameraMovementInput(FVector2D input) const
 {
 	if(cameraRef)
 		cameraRef->ProcessCameraMovementInput(input);

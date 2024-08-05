@@ -46,12 +46,17 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Pitch")
 	float pitchUpperLimitRads = 1.90f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Auto")
+	float autoAlignmentCooldown = 8.f;
+
 private:
 	TObjectPtr<AMainCharacter> characterRef = nullptr;
 
 	FVector2d targetSphericalCoords = FVector2d(1.f, 0.f);
 	float targetOffset = 100.f;
 	float targetFov = 90.f;
+
+	float timeSinceLastInput = 0.f;
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
 	float currentOffset = 100.f;
