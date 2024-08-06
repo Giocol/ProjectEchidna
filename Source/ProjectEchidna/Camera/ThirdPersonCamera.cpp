@@ -22,6 +22,7 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 	targetOffset = FMath::Lerp(wormsEyeCameraOffset, birdsEyeCameraOffset, 1 - targetSphericalCoords.X / pitchUpperLimitRads);//TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
 
 	timeSinceLastInput = 0.f;
+	currentPolarPostionInterpSpeed = polarPositionInterpSpeed;
 	canAutoAlign = true;
 }
 
@@ -37,7 +38,11 @@ void UThirdPersonCamera::CameraTick(float deltaTime)
 
 void UThirdPersonCamera::UpdateCameraPosition(float deltaTime)
 {
-	const FVector2d interpSphericalCoords = CameraUtils::PolarLerp(GetRelativeLocation().UnitCartesianToSpherical(), targetSphericalCoords, FMath::Clamp(deltaTime * 4, 0.f, 1.f));
+	const FVector2d interpSphericalCoords =
+		CameraUtils::PolarLerp(
+			GetRelativeLocation().UnitCartesianToSpherical(),
+			targetSphericalCoords,
+			FMath::Clamp(deltaTime * currentPolarPostionInterpSpeed, 0.f, 1.f));
 	//UE_LOG(LogTemp, Warning, TEXT("Interp is: %s (from %s to %s "), *interpSphericalCoords.ToString(), *GetRelativeLocation().UnitCartesianToSpherical().ToString(), *targetSphericalCoords.ToString());
 	SetRelativeLocation(interpSphericalCoords.SphericalToUnitCartesian() * currentOffset);
 }
@@ -50,14 +55,13 @@ void UThirdPersonCamera::UpdateCameraRotation(float deltaTime)
 
 void UThirdPersonCamera::UpdateFOV(float deltaTime)
 {
-	currentFov = FMath::FInterpTo(currentFov, targetFov, deltaTime, 2);
+	currentFov = FMath::FInterpTo(currentFov, targetFov, deltaTime, offsetInterpSpeed);
 	SetFieldOfView(currentFov);
-	UE_LOG(LogTemp, Warning, TEXT("FOV: %f"), FieldOfView);
 }
 
 void UThirdPersonCamera::UpdateCameraOffset(float deltaTime)
 {
-	currentOffset = FMath::FInterpTo(currentOffset, targetOffset, deltaTime, 2);
+	currentOffset = FMath::FInterpTo(currentOffset, targetOffset, deltaTime, fovInterpSpeed);
 }
 
 void UThirdPersonCamera::UpdateAutoAlignment(float deltaTime)
@@ -66,7 +70,9 @@ void UThirdPersonCamera::UpdateAutoAlignment(float deltaTime)
 
 	if(timeSinceLastInput >= autoAlignmentCooldown && canAutoAlign)
 	{
-		targetSphericalCoords = FVector2d(1, -characterRef->GetMeshComponentRelativeAngle());
+		targetSphericalCoords.X = 1;
+		targetSphericalCoords.Y = characterRef->GetMeshComponentPolarYaw();
+		currentPolarPostionInterpSpeed = autoAlignmentInterpSpeed;
 		canAutoAlign = false;
 	}
 }

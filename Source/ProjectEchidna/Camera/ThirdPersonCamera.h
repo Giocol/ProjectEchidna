@@ -29,17 +29,26 @@ private:
 	void UpdateAutoAlignment(float deltaTime);
 	
 private:
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings")
+	float polarPositionInterpSpeed = 4.f;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Offsets")
 	float birdsEyeCameraOffset = 800.f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Offsets")
 	float wormsEyeCameraOffset = 10.f;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Offsets")
+	float offsetInterpSpeed = 2.f;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | FOV")
 	float birdsEyeCameraFOV = 70.f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | FOV")
 	float wormsEyeCameraFOV = 120.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | FOV")
+	float fovInterpSpeed = 2.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Pitch")
 	float pitchLowerLimitRads = 0.5f; //TODO: make this and the one below clamped between 0 and pi
@@ -51,11 +60,14 @@ private:
 	float autoAlignmentCooldown = 8.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Alignment")
+	float autoAlignmentInterpSpeed = .2f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings | Alignment")
 	bool doesAutoAlign = true;
 
 private:
 	TObjectPtr<AMainCharacter> characterRef = nullptr;
-
+	
 	FVector2d targetSphericalCoords = FVector2d(1.f, 0.f);
 	float targetOffset = 100.f;
 	float targetFov = 90.f;
@@ -68,5 +80,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
 	float currentFov = 90.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
+	float currentPolarPostionInterpSpeed;
 
 };

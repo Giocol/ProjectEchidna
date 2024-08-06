@@ -36,9 +36,9 @@ void AMainCharacter::ProcessCameraMovementInput(FVector2D input) const
 		cameraRef->ProcessCameraMovementInput(input);
 }
 
-float AMainCharacter::GetMeshComponentRelativeForwardVector() const
+float AMainCharacter::GetMeshComponentPolarYaw() const
 {
-	return CameraUtils::GetAngleBetweenVectorsRads(GetActorForwardVector(), meshComponent->GetForwardVector());
+	return meshComponent->GetForwardVector().UnitCartesianToSpherical().Y;
 }
 
 void AMainCharacter::BeginPlay()

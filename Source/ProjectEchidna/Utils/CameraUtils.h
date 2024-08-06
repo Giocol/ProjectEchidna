@@ -3,7 +3,7 @@
 
 namespace CameraUtils
 {
-	static float RadAngleLerp(float current, float target, float alpha)
+	static float RadAngleLerp(const float current, const float target, const float alpha)
 	{
 		float delta = target - current;
 		if (delta > PI) {
@@ -14,7 +14,7 @@ namespace CameraUtils
 		return current + delta * alpha;
 	}
 	
-	static FVector2d PolarLerp(FVector2d current, FVector2d target, float alpha)
+	static FVector2d PolarLerp(const FVector2d current, const FVector2d target, const float alpha)
 	{
 		//special function needed because it can overflow from 3.14 to -3.14 and vice versa
 		float lerpedY = CameraUtils::RadAngleLerp(current.Y, target.Y, alpha);
@@ -25,7 +25,7 @@ namespace CameraUtils
 		return FVector2D(lerpedX, lerpedY);
 	}
 
-	static float GetAngleBetweenVectorsRads(FVector current, FVector target)
+	static float GetAngleBetweenVectorsRads(const FVector& current, const FVector& target)
 	{
 		return acos(FVector::DotProduct(current, target));
 	}
