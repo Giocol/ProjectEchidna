@@ -4,7 +4,6 @@
 #include "ThirdPersonCamera.h"
 
 #include "Kismet/KismetMathLibrary.h"
-#include "Math/UnitConversion.h"
 #include "ProjectEchidna/Character/MainCharacter.h"
 #include "ProjectEchidna/Utils/CameraUtils.h"
 
@@ -24,6 +23,17 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 	timeSinceLastInput = 0.f;
 	currentPolarPostionInterpSpeed = polarPositionInterpSpeed;
 	canAutoAlign = true;
+}
+
+void UThirdPersonCamera::BeginPlay() {
+	Super::BeginPlay();
+
+	SetRelativeLocation(FVector2d(startingPitch, startingYaw).SphericalToUnitCartesian() * startingOffset);
+
+	targetOffset = startingOffset;
+	targetFov = startingFov;
+	SetFieldOfView(targetFov);
+	canAutoAlign = false; //avoid autoaligning behavior until the first input
 }
 
 void UThirdPersonCamera::CameraTick(float deltaTime)
