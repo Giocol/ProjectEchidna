@@ -8,7 +8,10 @@
 #include "ProjectEchidna/Utils/CameraUtils.h"
 
 void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)                                                
-{                                                                                                               
+{
+	if(!canAutoAlign) //gets called if an autoalignment is currently happening, allows to get out of it on input avoiding camera jerks
+		targetSphericalCoords = GetRelativeLocation().UnitCartesianToSpherical();
+	
 	//TODO: input: normalize? nah? ye? maybe clamp to max/min?
 	//TODO: swizzle input in controller?
 	targetSphericalCoords.X += input.Y * 0.05; //TODO: hardcoded value out, sens in.
@@ -22,6 +25,7 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 
 	timeSinceLastInput = 0.f;
 	currentPolarPostionInterpSpeed = polarPositionInterpSpeed;
+
 	canAutoAlign = true;
 }
 
