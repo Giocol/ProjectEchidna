@@ -27,6 +27,9 @@ private:
 	void UpdateFOV(float deltaTime);
 	void UpdateCameraOffset(float deltaTime);
 	void UpdateAutoAlignment(float deltaTime);
+
+	void ComputeFov();
+	void ComputeOffset();
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Settings")

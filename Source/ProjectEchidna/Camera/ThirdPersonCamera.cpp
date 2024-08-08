@@ -20,9 +20,9 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 	//avoid weird behavior at sphere's poles
 	targetSphericalCoords.X = FMath::Clamp(targetSphericalCoords.X, pitchLowerLimitRads, pitchUpperLimitRads); 
 
-	targetFov = FMath::Lerp(wormsEyeCameraFOV, birdsEyeCameraFOV, 1 - targetSphericalCoords.X / pitchUpperLimitRads); //TODO: THIS VALUE SHOULD BE 3.13! Change the range of X	targetFov = FMath::Lerp(wormsEyeCameraFOV, birdsEyeCameraFOV, 1 - targetSphericalCoords.X / 2.13); //TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
-	targetOffset = FMath::Lerp(wormsEyeCameraOffset, birdsEyeCameraOffset, 1 - targetSphericalCoords.X / pitchUpperLimitRads);//TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
-
+	ComputeFov();
+	ComputeOffset();
+	
 	timeSinceLastInput = 0.f;
 	currentPolarPostionInterpSpeed = polarPositionInterpSpeed;
 
@@ -89,4 +89,15 @@ void UThirdPersonCamera::UpdateAutoAlignment(float deltaTime)
 		currentPolarPostionInterpSpeed = autoAlignmentInterpSpeed;
 		canAutoAlign = false;
 	}
+}
+
+void UThirdPersonCamera::ComputeFov()
+{
+	targetFov = FMath::Lerp(wormsEyeCameraFOV, birdsEyeCameraFOV, 1 - targetSphericalCoords.X / pitchUpperLimitRads); //TODO: THIS VALUE SHOULD BE 3.13! Change the range of X	targetFov = FMath::Lerp(wormsEyeCameraFOV, birdsEyeCameraFOV, 1 - targetSphericalCoords.X / 2.13); //TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
+}
+
+void UThirdPersonCamera::ComputeOffset()
+{
+	targetOffset = FMath::Lerp(wormsEyeCameraOffset, birdsEyeCameraOffset, 1 - targetSphericalCoords.X / pitchUpperLimitRads);//TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
+
 }
