@@ -25,7 +25,9 @@ void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)
 	
 	timeSinceLastInput = 0.f;
 	currentPolarPostionInterpSpeed = polarPositionInterpSpeed;
-
+	currentFovInterpSpeed = fovInterpSpeed;
+	currentOffsetInterpSpeed = offsetInterpSpeed;
+	
 	canAutoAlign = true;
 }
 
@@ -69,13 +71,13 @@ void UThirdPersonCamera::UpdateCameraRotation(float deltaTime)
 
 void UThirdPersonCamera::UpdateFOV(float deltaTime)
 {
-	currentFov = FMath::FInterpTo(currentFov, targetFov, deltaTime, offsetInterpSpeed);
+	currentFov = FMath::FInterpTo(currentFov, targetFov, deltaTime, currentOffsetInterpSpeed);
 	SetFieldOfView(currentFov);
 }
 
 void UThirdPersonCamera::UpdateCameraOffset(float deltaTime)
 {
-	currentOffset = FMath::FInterpTo(currentOffset, targetOffset, deltaTime, fovInterpSpeed);
+	currentOffset = FMath::FInterpTo(currentOffset, targetOffset, deltaTime, currentFovInterpSpeed);
 }
 
 void UThirdPersonCamera::UpdateAutoAlignment(float deltaTime)
@@ -88,6 +90,10 @@ void UThirdPersonCamera::UpdateAutoAlignment(float deltaTime)
 		targetSphericalCoords.Y = characterRef->GetMeshComponentPolarYaw();
 		currentPolarPostionInterpSpeed = autoAlignmentInterpSpeed;
 		canAutoAlign = false;
+		currentFovInterpSpeed = autoAlignmentInterpSpeed;
+		currentOffsetInterpSpeed = autoAlignmentInterpSpeed;
+		ComputeFov();
+		ComputeOffset();
 	}
 }
 
@@ -99,5 +105,5 @@ void UThirdPersonCamera::ComputeFov()
 void UThirdPersonCamera::ComputeOffset()
 {
 	targetOffset = FMath::Lerp(wormsEyeCameraOffset, birdsEyeCameraOffset, 1 - targetSphericalCoords.X / pitchUpperLimitRads);//TODO: THIS VALUE SHOULD BE 3.13! Change the range of X
-
+	UE_LOG(LogTemp, Warning, TEXT("%f"), targetOffset);
 }

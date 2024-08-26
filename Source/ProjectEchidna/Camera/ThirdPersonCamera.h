@@ -99,4 +99,10 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
 	float currentPolarPostionInterpSpeed;
 
+	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
+	float currentFovInterpSpeed;
+
+	UPROPERTY(VisibleAnywhere, Category = "Camera Settings | Debug")
+	float currentOffsetInterpSpeed;
+
 };
