@@ -10,6 +10,7 @@ class AMainCharacter;
 class UInputMappingContext;
 class UInputAction;
 class UEnhancedInputLocalPlayerSubsystem;
+class UEnhancedInputComponent;
 struct FInputActionValue;
 
 UCLASS()
