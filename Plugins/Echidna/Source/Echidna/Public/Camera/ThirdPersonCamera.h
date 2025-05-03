@@ -9,7 +9,7 @@
 class AMainCharacter;
 
 UCLASS()
-class PROJECTECHIDNA_API UThirdPersonCamera : public UCameraComponent
+class UThirdPersonCamera : public UCameraComponent
 {
 	GENERATED_BODY()
 

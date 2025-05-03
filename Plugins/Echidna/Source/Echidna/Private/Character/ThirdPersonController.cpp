@@ -1,11 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-
-#include "ThirdPersonController.h"
+﻿#include "Character/ThirdPersonController.h"
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "MainCharacter.h"
+#include "Character/MainCharacter.h"
 
 void AThirdPersonController::BeginPlay()
 {

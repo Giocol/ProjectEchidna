@@ -1,10 +1,7 @@
-﻿#include "MainCharacter.h"
+﻿#include "Echidna/Public/Character/MainCharacter.h"
 
-#include "Camera/CameraComponent.h"
+#include "Camera/ThirdPersonCamera.h"
 #include "Components/CapsuleComponent.h"
-#include "ProjectEchidna/Camera/ThirdPersonCamera.h"
-#include "Components/SkeletalMeshComponent.h"
-#include "ProjectEchidna/Utils/CameraUtils.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -36,9 +33,9 @@ void AMainCharacter::ProcessCameraMovementInput(FVector2D input) const
 		cameraRef->ProcessCameraMovementInput(input);
 }
 
-float AMainCharacter::GetMeshComponentRelativeForwardVector() const
+float AMainCharacter::GetMeshComponentPolarYaw() const
 {
-	return CameraUtils::GetAngleBetweenVectorsRads(GetActorForwardVector(), meshComponent->GetForwardVector());
+	return meshComponent->GetForwardVector().UnitCartesianToSpherical().Y;
 }
 
 void AMainCharacter::BeginPlay()

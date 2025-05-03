@@ -10,7 +10,7 @@ class UCameraComponent;
 class USkeletalMeshComponent;
 
 UCLASS()
-class PROJECTECHIDNA_API AMainCharacter : public ACharacter
+class AMainCharacter : public ACharacter
 {
 	GENERATED_BODY()
 

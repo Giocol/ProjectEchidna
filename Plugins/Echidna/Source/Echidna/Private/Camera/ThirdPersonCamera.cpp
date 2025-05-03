@@ -1,11 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Camera/ThirdPersonCamera.h"
 
-#include "ThirdPersonCamera.h"
-
+#include "Character/MainCharacter.h"
+#include "Echidna/Utils/CameraUtils.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "ProjectEchidna/Character/MainCharacter.h"
-#include "ProjectEchidna/Utils/CameraUtils.h"
 
 void UThirdPersonCamera::ProcessCameraMovementInput(FVector2D input)                                                
 {

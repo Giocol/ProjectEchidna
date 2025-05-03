@@ -13,7 +13,7 @@ class UEnhancedInputLocalPlayerSubsystem;
 struct FInputActionValue;
 
 UCLASS()
-class PROJECTECHIDNA_API AThirdPersonController : public APlayerController
+class AThirdPersonController : public APlayerController
 {
 	GENERATED_BODY()
 
